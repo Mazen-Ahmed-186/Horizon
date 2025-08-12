@@ -12,15 +12,15 @@ const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
                 <div className={"relative flex px-6 max-xl:justify-center"}>
                     <div className={"flex-center absolute -top-8 size-24 rounded-full text-center bg-gray-100 border-8 border-white p-2 shadow-profile"}>
                         <span className={"text-6xl font-bold text-blue-500"}>
-                            {user.firstName[0]}
+                            {user?.name[0]}
                         </span>
                     </div>
                     <div className={"flex flex-col pt-24"}>
                         <h1 className={"text-[24px] leading-[30px] font-semibold text-gray-900"}>
-                            {user.firstName} {user.lastName}
+                            {user?.name}
                         </h1>
                         <p className={"text-[16px] leading-[24px] font-normal text-gray-600"}>
-                            {user.email}
+                            {user?.email}
                         </p>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
                             <BankCards
                                 key={banks[0].$id}
                                 account={banks[0]}
-                                userName={`${user.firstName} ${user.lastName}`}
+                                userName={user?.name}
                                 showBalance={false}
                             />
                         </div>
@@ -57,7 +57,7 @@ const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
                                 <BankCards
                                     key={banks[1].$id}
                                     account={banks[1]}
-                                    userName={`${user.firstName} ${user.lastName}`}
+                                    userName={user?.name}
                                     showBalance={false}
                                 />
                             </div>
