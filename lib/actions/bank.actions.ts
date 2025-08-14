@@ -15,7 +15,7 @@ import { parseStringify } from "../utils";
 import { getTransactionsByBankId } from "./transaction.actions";
 import { getBanks, getBank } from "./user.actions";
 
-// Get multiple bank accounts
+
 export const getAccounts = async ({ userId }: getAccountsProps) => {
   try {
     // get banks from db
@@ -45,7 +45,7 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
           type: accountData.type as string,
           subtype: accountData.subtype! as string,
           appwriteItemId: bank.$id,
-          sharaebleId: bank.shareableId,
+          shareableId: bank.shareableId,
         };
 
         return account;
@@ -63,13 +63,13 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
   }
 };
 
-// Get one bank account
+
 export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
   try {
-    // get bank from db
+
     const bank = await getBank({ documentId: appwriteItemId });
 
-    // get account info from plaid
+
     const accountsResponse = await plaidClient.accountsGet({
       access_token: bank.accessToken,
     });
@@ -114,9 +114,8 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       appwriteItemId: bank.$id,
     };
 
-    // sort transactions by date such that the most recent transaction is first
-      const allTransactions = [...transactions, ...transferTransactions].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    const allTransactions = [...transactions, ...transferTransactions].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
     return parseStringify({
@@ -151,7 +150,8 @@ export const getTransactions = async ({
   accessToken,
 }: getTransactionsProps) => {
   let hasMore = true;
-  let transactions: any = [];
+  let transactions: any[] = [];
+
 
   try {
     // Iterate through each page of new transaction updates for item

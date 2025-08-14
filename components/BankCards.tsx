@@ -2,16 +2,19 @@ import React from 'react'
 import Link from "next/link";
 import {formatAmount} from "@/lib/utils";
 import Image from "next/image";
+import Copy from "@/components/Copy";
 
 
-const BankCards = ({account, userName, showBalance = false} : CreditCardProps) => {
+const BankCards = ({account, userName, showBalance = true} : CreditCardProps) => {
+    console.log(account);
+
     return (
         <div className={"flex flex-col"}>
-            <Link href={"/"} className={"relative flex h-[190px] w-full max-w-[320px] justify-between rounded-[20px] border border-white bg-bank-gradient shadow-creditCard backdrop-blur-[6px]"}>
+            <Link href={`/transaction-history/?id=${account.appwriteItemId}`} className={"relative flex h-[190px] w-full max-w-[320px] justify-between rounded-[20px] border border-white bg-bank-gradient shadow-creditCard backdrop-blur-[6px]"}>
                 <div className={"relative z-10 flex size-full max-w-[228px] flex-col justify-between rounded-l-[20px] bg-gray-700 bg-bank-gradient px-5 pb-4 pt-5"}>
                     <div>
                         <h1 className={"text-[16px] leading-[24px] font-semibold text-white"}>
-                            {userName}
+                            {account.name}
                         </h1>
                         <p className={"font-ibm-plex-serif font-black text-white"}>
                             {formatAmount(account.currentBalance)}
@@ -28,7 +31,7 @@ const BankCards = ({account, userName, showBalance = false} : CreditCardProps) =
                         </div>
                         <p className={"text-[14px] leading-[20px] font-semibold tracking-[1.1px] text-white"}>
                             ◉◉◉◉ ◉◉◉◉ ◉◉◉◉ <span className={"text-[16px] leading-[24px]"}>
-                                {1234}
+                                {account?.mask}
                             </span>
                         </p>
                     </article>
@@ -56,6 +59,7 @@ const BankCards = ({account, userName, showBalance = false} : CreditCardProps) =
                     className={"absolute top-0 left-0"}
                 />
             </Link>
+            {showBalance && <Copy title={account?.shareableId}/>}
         </div>
     )
 }

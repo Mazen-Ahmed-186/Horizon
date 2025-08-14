@@ -2,9 +2,13 @@ import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
 import BankCards from "@/components/BankCards";
+import {countTransactionCategories} from "@/lib/utils";
+import Category from "@/components/Category";
 
 
 const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
+    const categories : CategoryCount[] = countTransactionCategories(transactions);
+
     return (
         <aside className={"no-scrollbar hidden h-screen max-h-screen flex-col border-l border-gray-200 xl:flex w-[355px] xl:overflow-y-scroll !important"}>
             <section className={"flex flex-col pb-8"}>
@@ -12,12 +16,12 @@ const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
                 <div className={"relative flex px-6 max-xl:justify-center"}>
                     <div className={"flex-center absolute -top-8 size-24 rounded-full text-center bg-gray-100 border-8 border-white p-2 shadow-profile"}>
                         <span className={"text-6xl font-bold text-blue-500"}>
-                            {user?.name[0]}
+                            {user?.firstName[0]}
                         </span>
                     </div>
                     <div className={"flex flex-col pt-24"}>
                         <h1 className={"text-[24px] leading-[30px] font-semibold text-gray-900"}>
-                            {user?.name}
+                            {user?.firstName} {user?.lastName}
                         </h1>
                         <p className={"text-[16px] leading-[24px] font-normal text-gray-600"}>
                             {user?.email}
@@ -48,7 +52,7 @@ const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
                             <BankCards
                                 key={banks[0].$id}
                                 account={banks[0]}
-                                userName={user?.name}
+                                userName={`${user?.firstName} ${user?.lastName}`}
                                 showBalance={false}
                             />
                         </div>
@@ -57,13 +61,27 @@ const RightSideBar = ({user, transactions, banks} : RightSidebarProps) => {
                                 <BankCards
                                     key={banks[1].$id}
                                     account={banks[1]}
-                                    userName={user?.name}
+                                    userName={user?.firstName}
                                     showBalance={false}
                                 />
                             </div>
                         )}
                     </div>
                 )}
+
+                <div className={"mt-10 flex flex-col flex-1 gap-6"}>
+                    <h2 className={"text-[18px] leading-[22px] font-semibold text-gray-900"}>
+                        Top categories
+                    </h2>
+                    <div className={"space-y-5"}>
+                        {categories.map((category, index) => (
+                            <Category
+                                key={category.name}
+                                category={category}
+                            />
+                        ))}
+                    </div>
+                </div>
             </section>
         </aside>
     )
