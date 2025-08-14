@@ -46,12 +46,12 @@ const TransactionHistory = async ({searchParams: {id, page}}:SearchParamProps) =
                             </span>
                         </p>
                     </div>
-                    <div className={"flex-center flex-col gap-2 rounded-md bg-blue-25/20 px-4 py-2 text-white"}>
+                    <div className={"flex items-center justify-center flex-col gap-2 rounded-md bg-blue-25/20 px-4 py-2 text-white"}>
                         <p className={"text-[14px] leading-[20px]"}>
                             Current Balance
                         </p>
                         <p className={"text-[24px] leading-[30px] text-center font-bold"}>
-                            {formatAmount(account?.data.balance)}
+                            {formatAmount(account?.data.currentBalance)}
                         </p>
                     </div>
                 </div>
